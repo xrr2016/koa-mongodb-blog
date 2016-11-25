@@ -1,13 +1,34 @@
 const path = require('path')
 const express = require('express')
-const app = express()
-//路由
-const indexRouter = require('./routes/index')
-const userRouter = require('./routes/users')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const flash = require('connect-flash')
+const config = require('config-lite')
+const routes = require('./routes')
+const pkg = require('./package')
 
+const app = express()
 
 app.set('views',path.join(__dirname,'views'))
 app.set('view engine','ejs')
+
+//静态文件
+app.use(express.static(path.join(__dirname,'public')))
+//session
+app.use(session({
+  name:config.session.key,
+  secret:config.session.secret,
+  cookie:{
+    maxAge:config.session.maxAge
+  },
+  store:new MongoStore({
+    url:config.mongodb
+  })
+}))
+//显示通知
+app.use(flash())
+
+routes(app)
 
 //错误处理
 app.use(function(err,req,res,next){
@@ -15,10 +36,6 @@ app.use(function(err,req,res,next){
   res.status(500).send("Something Broke!!!")
 })
 
-
-app.use('/',indexRouter)
-app.use('/users/',userRouter)
-
-
-
-app.listen(3000)
+app.listen(config.port,function(){
+  console.log(`${pkg.name} Listening on port ${config.port}`)
+})
