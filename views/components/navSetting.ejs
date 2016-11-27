@@ -3,7 +3,7 @@
     <div class="ui floating dropdown button">
       <i class="icon bars"></i>
       <div class="menu">
-        <% if (user){ %>
+        <% if (user) { %>
           <a href="/posts?author = <%= user_id %> " class="item">个人主页</a>
           <div class="divider"></div>
           <a href="/posts/create" class="item">发表文章</a>
@@ -11,7 +11,7 @@
         <% else %>
           <a href="/signin" class="item">登录</a>
           <a href="/signup" class="item">注册</a>
-        <% }%>
+        <% } %>
       </div>
     </div>
   </div>

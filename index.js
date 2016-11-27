@@ -41,7 +41,7 @@ app.use(function(req,res,next){
 })
 
 routes(app)
-
+ 
 //错误处理
 app.use(function(err,req,res,next){
   console.log(err.stack)
