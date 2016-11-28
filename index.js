@@ -27,6 +27,10 @@ app.use(session({
 }))
 //显示通知
 app.use(flash())
+app.use(require('express-formidable')({
+  uploadDir:path.join(__dirname,'public/img'),
+  keepExtensions:true
+}))
 
 app.locals.blog = {
   title : pkg.name,
@@ -41,7 +45,7 @@ app.use(function(req,res,next){
 })
 
 routes(app)
- 
+
 //错误处理
 app.use(function(err,req,res,next){
   console.log(err.stack)
