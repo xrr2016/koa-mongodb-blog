@@ -1,6 +1,5 @@
-config/*
-!config/default.*
+.DS_Store
 logs
-npm-debug.log
 node_modules
 coverage
+*.log
