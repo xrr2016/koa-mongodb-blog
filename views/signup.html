@@ -1,7 +1,9 @@
-{% extends 'views/base.html' %} {% block body %}
+{% extends 'views/base.html' %} 
+{% block body %}
+{% include "views/components/header.html" %}
 <div class="container">
   <div class="box sign-box">
-    <form action="/signup" method="POST">
+    <form action="/user/signup" method="POST">
       <div class="field">
         <label class="label">用户名</label>
         <div class="control">

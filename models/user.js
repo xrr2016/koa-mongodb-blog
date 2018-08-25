@@ -29,14 +29,15 @@ const UserSchema = new Schema({
   }
 })
 
-UserSchema.methods.generateHash = async function(password) {
+UserSchema.statics.generateHash = async function(password) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
+
   return hash
 }
 
-UserSchema.methods.comparePassword = async function(password) {
-  return bcrypt.compare(password, this.password)
+UserSchema.statics.comparePassword = async function(password, hash) {
+  return bcrypt.compare(password, hash)
 }
 
 module.exports = mongoose.model('User', UserSchema)

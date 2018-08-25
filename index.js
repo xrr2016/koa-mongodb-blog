@@ -20,6 +20,7 @@ mongoose.connect(
 )
 mongoose.Promise = global.Promise
 
+app.keys = [config.keys]
 app.use(
   views(path.join(__dirname, 'views'), {
     map: { html: 'nunjucks' }
@@ -34,9 +35,12 @@ app.use(
     app
   )
 )
+app.use(async (ctx, next) => {
+  ctx.state.ctx = ctx
+  await next()
+})
 app.use(bodyParser())
 app.use(serve(path.join(__dirname, 'public')))
-
 router(app)
 
 app.listen(port, () => {
